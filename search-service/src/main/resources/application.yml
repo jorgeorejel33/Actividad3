@@ -1,17 +1,15 @@
 server:
-  port: 0
+  port: ${SERVER_PORT:8082}
 
 spring:
   application:
     name: search-service
   elasticsearch:
-    uris: ${ES_HOST:http://localhost:9200}
-    username: ${ES_USERNAME}
-    password: ${ES_PASSWORD}
-    connection-timeout: 5s
-    socket-timeout: 10s
+    uris: ${ELASTIC_URL:http://localhost:9200}
+    username: ${ELASTIC_USERNAME:elastic}
+    password: ${ELASTIC_PASSWORD:changeme}
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
