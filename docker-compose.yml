@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
+    container_name: es-node
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_USERNAME=${ELASTIC_USERNAME}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=false
+      - ES_JAVA_OPTS=${ELASTIC_JAVA_OPTS}
+    ports:
+      - "9200:9200"
+    networks: [${NETWORK_NAME}]
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=${ELASTIC_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
+    ports:
+      - "5601:5601"
+    depends_on: [elasticsearch]
+    networks: [${NETWORK_NAME}]
+
+  eureka:
+    build:
+      context: ./eureka
+    container_name: eureka
+    environment:
+      - JAVA_TOOL_OPTIONS=${JAVA_TOOL_OPTIONS}
+      - EUREKA_PORT=${EUREKA_PORT}
+    ports:
+      - "${EUREKA_PORT}:8761"
+    networks: [${NETWORK_NAME}]
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    environment:
+      - JAVA_TOOL_OPTIONS=${JAVA_TOOL_OPTIONS}
+      - GATEWAY_PORT=${GATEWAY_PORT}
+      - EUREKA_URI=http://eureka:${EUREKA_PORT}/eureka
+      - CORS_ALLOWED_ORIGINS=http://localhost:${WEBAPP_PORT}
+    ports:
+      - "${GATEWAY_PORT}:8080"
+    depends_on: [eureka, elasticsearch]
+    networks: [${NETWORK_NAME}]
+
+  search-service:
+    build:
+      context: ./search-service
+    container_name: search-service
+    environment:
+      - JAVA_TOOL_OPTIONS=${JAVA_TOOL_OPTIONS}
+      - EUREKA_URI=http://eureka:${EUREKA_PORT}/eureka
+      - ES_HOST=http://elasticsearch:9200
+      - ES_USERNAME=${ELASTIC_USERNAME}
+      - ES_PASSWORD=${ELASTIC_PASSWORD}
+    depends_on: [eureka, elasticsearch]
+    networks: [${NETWORK_NAME}]
+
+  webapp:
+    build:
+      context: ./webapp
+    container_name: webapp
+    environment:
+      - VITE_API_BASE=http://localhost:${GATEWAY_PORT}
+    ports:
+      - "${WEBAPP_PORT}:5173"
+    depends_on: [gateway]
+    networks: [${NETWORK_NAME}]
+
+networks:
+  ${NETWORK_NAME}:
+    driver: bridge
