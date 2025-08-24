@@ -14,7 +14,7 @@ spring:
           uri: lb://search-service
           predicates:
             - Path=/api/**
-          # Si en algún momento desea eliminar el prefijo /api, active el filtro:
+          # Si desea quitar el prefijo /api antes de llegar al microservicio:
           # filters:
           #   - StripPrefix=1
       globalcors:

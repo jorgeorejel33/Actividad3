@@ -55,6 +55,10 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <!-- Declaración explícita: evita "Unable to find main class" -->
+          <mainClass>unir.dwi.gateway.ApiGatewayApplication</mainClass>
+        </configuration>
       </plugin>
     </plugins>
   </build>
