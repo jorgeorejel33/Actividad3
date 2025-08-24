@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "Camiseta React",
+    "price": 299,
+    "description": "Camiseta cómoda con logo de React para desarrolladores.",
+    "image": "/images/camisaReact.jpg",
+    "category": "Ropa"
+  },
+  {
+    "id": 2,
+    "name": "Taza JavaScript",
+    "price": 199,
+    "description": "Taza amarilla interior blanco con el logo de JavaScript.",
+    "image": "/images/tazaJS.jpg",
+    "category": "Accesorios"
+  },
+  {
+    "id": 3,
+    "name": "Sticker TypeScript",
+    "price": 99,
+    "description": "Sticker resistente con logo TypeScript para tu laptop.",
+    "image": "/images/stickerTS.jpg",
+    "category": "Accesorios"
+  },
+  {
+    "id": 4,
+    "name": "Mouse ergonómico",
+    "price": 499,
+    "description": "Mouse inalámbrico ergonómico para largas jornadas.",
+    "image": "/images/mouseErgonomico.jpg",
+    "category": "Tecnología"
+  },
+  {
+    "id": 5,
+    "name": "Teclado mecánico",
+    "price": 1299,
+    "description": "Teclado mecánico retroiluminado profesional.",
+    "image": "/images/teclado.jpg",
+    "category": "Tecnología"
+  },
+  {
+    "id": 6,
+    "name": "Audífonos Bluetooth",
+    "price": 799,
+    "description": "Audífonos con cancelación de ruido.",
+    "image": "/images/audifonos.jpg",
+    "category": "Tecnología"
+  },
+  {
+    "id": 7,
+    "name": "Libreta para notas",
+    "price": 149,
+    "description": "Libreta minimalista para tus ideas y diagramas.",
+    "image": "/images/libreta.jpg",
+    "category": "Papelería"
+  },
+  {
+    "id": 8,
+    "name": "Mochila para laptop",
+    "price": 999,
+    "description": "Mochila resistente y moderna para transportar tu equipo.",
+    "image": "/images/mochila.jpg",
+    "category": "Accesorios"
+  }
+]

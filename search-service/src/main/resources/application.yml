@@ -5,6 +5,7 @@ spring:
   application:
     name: search-service
   elasticsearch:
+    # En local, el compose expone http://elasticsearch:9200 dentro de la red de Docker.
     uris: ${ELASTIC_URL:http://localhost:9200}
     username: ${ELASTIC_USERNAME:elastic}
     password: ${ELASTIC_PASSWORD:changeme}
@@ -13,3 +14,17 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never

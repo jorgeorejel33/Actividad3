@@ -4,8 +4,14 @@ server:
 spring:
   application:
     name: api-gateway
+
+  # Perfil activo por defecto (puede sobreescribirse con SPRING_PROFILES_ACTIVE)
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default}
+
   cloud:
     gateway:
+      # --- Perfil por defecto: usa Eureka (lb://) ---
       discovery:
         locator:
           enabled: true
@@ -14,9 +20,11 @@ spring:
           uri: lb://search-service
           predicates:
             - Path=/api/**
-          # Si desea quitar el prefijo /api antes de llegar al microservicio:
+          # Si necesita quitar el prefijo /api al pasar al microservicio:
           # filters:
           #   - StripPrefix=1
+
+      # CORS global (se aplica en todos los perfiles)
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
@@ -30,3 +38,24 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+
+---
+# ===================== PERFIL LOCAL =====================
+# Evita Eureka y enruta de forma estática a search-service.
+spring:
+  config:
+    activate:
+      on-profile: local
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: search-route-static
+          uri: http://search-service:8082
+          predicates:
+            - Path=/api/**
+          # filters:
+          #   - StripPrefix=1
+# ========================================================
