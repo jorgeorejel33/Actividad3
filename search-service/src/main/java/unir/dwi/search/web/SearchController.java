@@ -11,6 +11,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class SearchController {
+
   private final SearchService service;
   private final ProductRepository repo;
 
