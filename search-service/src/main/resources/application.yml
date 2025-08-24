@@ -1,0 +1,17 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: search-service
+  elasticsearch:
+    uris: ${ES_HOST:http://localhost:9200}
+    username: ${ES_USERNAME}
+    password: ${ES_PASSWORD}
+    connection-timeout: 5s
+    socket-timeout: 10s
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
