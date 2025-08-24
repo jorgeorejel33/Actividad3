@@ -9,7 +9,14 @@ spring:
       discovery:
         locator:
           enabled: true
-      # CORS global SOLO en el Gateway (máxima puntuación del criterio)
+      routes:
+        - id: search-route
+          uri: lb://search-service
+          predicates:
+            - Path=/api/**
+          # Si en algún momento desea eliminar el prefijo /api, active el filtro:
+          # filters:
+          #   - StripPrefix=1
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
